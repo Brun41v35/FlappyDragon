@@ -48,6 +48,9 @@ class GameScene: SKScene {
     
     func addPlayer() {
         player = SKSpriteNode(imageNamed: "player1")
+        player.zPosition = 4
+        player.position = CGPoint(x: 60, y: size.height - gameArea/2)
+        addChild(player)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
