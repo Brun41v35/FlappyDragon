@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var floor: SKSpriteNode!
     var intro: SKSpriteNode!
     var player: SKSpriteNode!
+    var velocity: Double = 100.0
     var gameArea: CGFloat = 410.0
     
     //MARK: - LifeCycle
@@ -22,6 +23,7 @@ class GameScene: SKScene {
         addFloor()
         addIntro()
         addPlayer()
+        moveFloor()
     }
     
     //MARK: - Functions
@@ -50,7 +52,24 @@ class GameScene: SKScene {
         player = SKSpriteNode(imageNamed: "player1")
         player.zPosition = 4
         player.position = CGPoint(x: 60, y: size.height - gameArea/2)
+        
+        var playerTextures = [SKTexture]()
+        for nameImage in 1...4 {
+            playerTextures.append(SKTexture(imageNamed: "player\(nameImage)"))
+        }
+        let animationAction = SKAction.animate(with: playerTextures, timePerFrame: 0.09)
+        let repeatAction = SKAction.repeatForever(animationAction)
+        player.run(repeatAction)
         addChild(player)
+    }
+    
+    func moveFloor() {
+        let duration = Double(floor.size.width/2)/velocity
+        let moveFloorAction = SKAction.moveBy(x: -floor.size.width/2, y: 0, duration: duration)
+        let resetAction = SKAction.moveBy(x: floor.size.width/2, y: 0, duration: duration)
+        let sequenceAction = SKAction.sequence([moveFloorAction,resetAction])
+        let repeatAction = SKAction.repeatForever(sequenceAction)
+        floor.run(repeatAction)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
