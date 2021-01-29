@@ -86,7 +86,7 @@ class GameScene: SKScene {
     func moveFloor() {
         let duration = Double(floor.size.width/2)/velocity
         let moveFloorAction = SKAction.moveBy(x: -floor.size.width/2, y: 0, duration: duration)
-        let resetAction = SKAction.moveBy(x: floor.size.width/2, y: 0, duration: duration)
+        let resetAction = SKAction.moveBy(x: floor.size.width/2, y: 0, duration: 0)
         let sequenceAction = SKAction.sequence([moveFloorAction,resetAction])
         let repeatAction = SKAction.repeatForever(sequenceAction)
         floor.run(repeatAction)
